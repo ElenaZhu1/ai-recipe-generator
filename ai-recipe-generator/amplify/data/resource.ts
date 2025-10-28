@@ -1,8 +1,5 @@
-import { type ClientSchema, a, defineData, defineAuth } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
-// ----------------------
-// Data schema
-// ----------------------
 const schema = a.schema({
   BedrockResponse: a.customType({
     body: a.string(),
@@ -16,7 +13,7 @@ const schema = a.schema({
     .handler(
       a.handler.custom({
         entry: "./bedrock.js",
-        dataSource: "bedrockDS",
+        dataSource: "bedrockDS"
       })
     ),
 });
@@ -29,20 +26,6 @@ export const data = defineData({
     defaultAuthorizationMode: "apiKey",
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
-    },
-  },
-});
-
-// ----------------------
-// Auth configuration
-// ----------------------
-export const auth = defineAuth({
-  loginWith: {
-    email: {
-      verificationEmailStyle: "CODE",
-      verificationEmailSubject: "Welcome to the AI-Powered Recipe Generator!",
-      verificationEmailBody: (createCode) =>
-        `Use this code to confirm your account: ${createCode()}`,
     },
   },
 });
